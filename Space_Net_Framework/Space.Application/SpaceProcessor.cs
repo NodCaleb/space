@@ -20,6 +20,30 @@ namespace Space.Application
             G = g;
         }
 
+        public MassCenter GenerateMassCenter(List<Globe> globes, bool chained)
+        {
+            var mc = new MassCenter();
+
+            globes.OrderByDescending(g => g.Mass).ToList().ForEach(globe =>
+            {
+                //Первый объект?
+                if (mc.Mass == 0)
+                {
+                    mc.X = globe.X;
+                    mc.Y = globe.Y;
+                    mc.Mass = globe.Mass;
+                }
+                else
+                {
+                    mc.X += (globe.X - mc.X) * globe.Mass / (mc.Mass + globe.Mass);
+                    mc.Y += (globe.Y - mc.Y) * globe.Mass / (mc.Mass + globe.Mass);
+                    mc.Mass += globe.Mass;
+                }
+            });
+
+            return mc;
+        }
+
         public MassCenter GenerateMassCenter(List<Globe> globes)
         {
             var mc = new MassCenter();

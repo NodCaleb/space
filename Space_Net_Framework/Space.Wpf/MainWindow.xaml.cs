@@ -34,36 +34,36 @@ namespace Space.Wpf
 
             _globes.Add(new Globe
             {
-                X = 200,
-                Y = 200,
-                Mass = 5,
-                Name = "Alpha",
-                SpeedX = 1,
+                X = 400,
+                Y = 300,
+                Mass = 900,
+                Name = "Sun",
+                SpeedX = 0,
                 SpeedY = 0,
                 Color = Color.FromArgb(255, 255, 0, 0),
-                Radius = 5,
+                Radius = 50,
                 Id = Guid.NewGuid()
             });
             _globes.Add(new Globe
             {
-                X = 200,
-                Y = 240,
-                Mass = 50,
-                Name = "Beta",
+                X = 1000,
+                Y = 300,
+                Mass = 42,
+                Name = "Earth",
                 SpeedX = 0,
-                SpeedY = 0,
+                SpeedY = 1,
                 Color = Color.FromArgb(255, 0, 255, 0),
                 Radius = 10,
                 Id = Guid.NewGuid()
             });
             _globes.Add(new Globe
             {
-                X = 1000,
-                Y = 220,
-                Mass = 10,
-                Name = "Gamma",
-                SpeedX = -1,
-                SpeedY = 0,
+                X = 1040,
+                Y = 300,
+                Mass = 1,
+                Name = "Moon",
+                SpeedX = 0,
+                SpeedY = 2,
                 Color = Color.FromArgb(255, 0, 0, 255),
                 Radius = 5,
                 Id = Guid.NewGuid()
@@ -72,6 +72,7 @@ namespace Space.Wpf
             InitializeComponent();
 
             DrawGlobes();
+            //DrawCenter(_processor.GenerateMassCenter(_globes));
 
             var spaceThread = new Thread(() => ProcessSpace());
             spaceThread.Start();
@@ -83,14 +84,12 @@ namespace Space.Wpf
             {
                 Thread.Sleep(20);
 
-                var center = _processor.GenerateMassCenter(_globes);
-
                 ProcessGobes();
 
                 Dispatcher.BeginInvoke(new ThreadStart(delegate
                 {
                     DrawGlobes();
-                    //DrawCenter(center);
+                    //DrawCenter(_processor.GenerateMassCenter(_globes, true));
                 }));
             };
         }
