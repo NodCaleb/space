@@ -68,11 +68,23 @@ namespace Space.Wpf
                 Radius = 5,
                 Id = Guid.NewGuid()
             });
+            _globes.Add(new Globe
+            {
+                X = 1500,
+                Y = 600,
+                Mass = 1,
+                Name = "Comet",
+                SpeedX = -2,
+                SpeedY = 0,
+                Color = Color.FromArgb(255, 0, 0, 0),
+                Radius = 5,
+                Id = Guid.NewGuid()
+            });
 
             InitializeComponent();
 
             DrawGlobes();
-            //DrawCenter(_processor.GenerateMassCenter(_globes));
+            DrawCenter(_processor.GenerateMassCenter(_globes));
 
             var spaceThread = new Thread(() => ProcessSpace());
             spaceThread.Start();
@@ -89,7 +101,7 @@ namespace Space.Wpf
                 Dispatcher.BeginInvoke(new ThreadStart(delegate
                 {
                     DrawGlobes();
-                    //DrawCenter(_processor.GenerateMassCenter(_globes, true));
+                    DrawCenter(_processor.GenerateMassCenter(_globes, true));
                 }));
             };
         }
@@ -127,11 +139,11 @@ namespace Space.Wpf
             {
                 var el = new Ellipse();
 
-                el.Width = globe.Radius;
-                el.Height = globe.Radius;
+                el.Width = globe.Radius * 2;
+                el.Height = globe.Radius * 2;
 
-                el.SetValue(Canvas.LeftProperty, globe.X);
-                el.SetValue(Canvas.TopProperty, globe.Y);
+                el.SetValue(Canvas.LeftProperty, globe.X - globe.Radius);
+                el.SetValue(Canvas.TopProperty, globe.Y - globe.Radius);
 
                 el.Fill = new SolidColorBrush {
                     Color = globe.Color
